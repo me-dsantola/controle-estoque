@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Controle de Estoque Simplificado
 
-## Getting Started
+**Aluno(a):** Davi Santiago Moreira
+**Turma / Data:** ADS
+**Link do Sistema Publicado:** [LINK DA VERCEL AQUI]
 
-First, run the development server:
+## 1. Apresentação e Objetivo
+Sistema web desenvolvido como atividade prática para gerir um pequeno controlo de stock. Permite registar produtos, listar as quantidades, verificar alertas de stock baixo (menos de 5 unidades) e excluir itens. O projeto foi desenvolvido com o auxílio do Google Gemini como ferramenta de IA.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 2. Tecnologias Utilizadas
+* **Front-end:** Next.js, React e Tailwind CSS.
+* **Back-end/Base de Dados:** Supabase (PostgreSQL) com Server Actions.
+* **Testes:** Vitest.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 3. Como Executar Localmente
+1. Clone o repositório.
+2. Instale as dependências com `npm install` (ou `npm install --legacy-peer-deps`).
+3. Renomeie o ficheiro `.env.example` para `.env.local` e insira as suas chaves do Supabase.
+4. Execute o servidor com `npm run dev` e aceda a `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 4. Auditoria e Prompts (Resultados)
+* **Prompt 4 (Auditoria Completa):** Realizada leitura do código inicial. Foi gerado o ficheiro `AUDITORIA.md` com os principais riscos identificados (RLS desligado e regras apenas no cliente).
+* **Prompt 1 (Segurança):** Ativámos o RLS no Supabase para proteção da base de dados e movemos as regras de validação para o servidor usando Next.js Server Actions e a chave `service_role`.
+* **Prompt 3 (Testes de Integração):** Foram elaborados testes focados no cadastro de produtos e validação de regras de negócio, utilizando o Vitest e *mocks* para simular o comportamento da base de dados.
+* **Prompt 2 (Refatoração):** Separou-se a lógica de acesso aos dados (UI vs. Serviços), criando um ficheiro `services.ts` dedicado à comunicação com o Supabase.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 5. Testes Realizados
+Foram criados testes automatizados com o Vitest para os seguintes fluxos críticos:
+* Cadastro com dados válidos (Caminho feliz).
+* Bloqueio de cadastro com valores negativos (Preço/Quantidade).
+* Bloqueio de cadastro com campos vazios.
+* Exclusão de produto.
+Para executar os testes, utilize o comando: `npx vitest run`.
